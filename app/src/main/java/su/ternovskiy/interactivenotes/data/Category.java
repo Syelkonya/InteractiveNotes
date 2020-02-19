@@ -1,5 +1,6 @@
 package su.ternovskiy.interactivenotes.data;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -16,6 +17,12 @@ public class Category {
 
     @ColumnInfo(name = "position")
     private long mCategoryPosition;
+
+    public Category(@NonNull String categoryName) {
+        mCategoryName = categoryName;
+        mCategoryPosition= (long) (Math.random() * 10);
+    }
+
 
     public long getId() {
         return mId;
