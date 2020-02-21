@@ -18,9 +18,9 @@ public class Category {
     @ColumnInfo(name = "position")
     private long mCategoryPosition;
 
-    public Category(@NonNull String categoryName) {
+    public Category(@NonNull String categoryName, long categoryPosition) {
         mCategoryName = categoryName;
-        mCategoryPosition= (long) (Math.random() * 10);
+        mCategoryPosition= categoryPosition;
     }
 
 

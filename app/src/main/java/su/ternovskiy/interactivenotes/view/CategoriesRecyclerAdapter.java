@@ -21,7 +21,7 @@ public class CategoriesRecyclerAdapter extends Adapter<CategoriesRecyclerAdapter
     private List<Category> mCategoryList;
     private final LayoutInflater mLayoutInflater;
 
-    CategoriesRecyclerAdapter(Context context){
+    CategoriesRecyclerAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
     }
 
@@ -29,11 +29,6 @@ public class CategoriesRecyclerAdapter extends Adapter<CategoriesRecyclerAdapter
     @NonNull
     @Override
     public CategoriesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        return new CategoriesViewHolder(
-//                LayoutInflater.from(parent.getContext())
-//                .inflate(R.layout.categories_view_item, parent, false)
-//        );
-
         View itemView = mLayoutInflater.inflate(R.layout.categories_view_item, parent, false);
         return new CategoriesViewHolder(itemView);
     }
@@ -55,7 +50,7 @@ public class CategoriesRecyclerAdapter extends Adapter<CategoriesRecyclerAdapter
         notifyDataSetChanged();
     }
 
-    static class CategoriesViewHolder extends RecyclerView.ViewHolder{
+    static class CategoriesViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mCategoryNameTextView;
         private TextView mQuantityOfNotes;
@@ -72,7 +67,7 @@ public class CategoriesRecyclerAdapter extends Adapter<CategoriesRecyclerAdapter
 
         public void bindView(@NonNull Category category) {
             mCategoryNameTextView.setText(category.getCategoryName());
-            mQuantityOfNotes.setText((int)(10*Math.random())+"");
+            mQuantityOfNotes.setText(category.getCategoryPosition() + "");
             mCategoryIconImageView.setImageResource(R.drawable.ic_launcher_background);
         }
     }
