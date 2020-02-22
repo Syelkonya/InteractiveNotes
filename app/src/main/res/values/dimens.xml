@@ -5,4 +5,5 @@
     <dimen name="standart_elevation">8dp</dimen>
     <dimen name="small_padding">4dp</dimen>
     <dimen name="zero">0dp</dimen>
+    <dimen name="big_text">20sp</dimen>
 </resources>

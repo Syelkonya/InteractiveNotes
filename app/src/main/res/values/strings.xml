@@ -2,4 +2,6 @@
     <string name="app_name">Interactive Notes</string>
     <string name="search_title">search</string>
     <string name="food">Еда</string>
+    <string name="category_name">Category name</string>
+    <string name="do_you_want_to_add_category">Do you want to add category?</string>
 </resources>

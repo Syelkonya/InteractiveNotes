@@ -21,6 +21,7 @@ public class CategoriesRecyclerAdapter extends Adapter<CategoriesRecyclerAdapter
     private List<Category> mCategoryList;
     private final LayoutInflater mLayoutInflater;
 
+
     CategoriesRecyclerAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
     }

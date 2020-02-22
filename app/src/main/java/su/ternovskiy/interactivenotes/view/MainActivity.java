@@ -4,18 +4,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.List;
-
 import su.ternovskiy.interactivenotes.R;
-import su.ternovskiy.interactivenotes.data.Category;
 
 
 public class MainActivity extends AppCompatActivity{
@@ -24,6 +22,7 @@ public class MainActivity extends AppCompatActivity{
     private FloatingActionButton mMainFab;
     private RecyclerView mCategoriesRecyclerView;
     private CategoryViewModel mCategoryViewModel;
+    private DialogFragment mCategoryDialog;
 
 
     @Override
@@ -32,7 +31,10 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         initViews();
+        initDialog();
+
     }
+
 
 
     private void initViews() {
@@ -49,6 +51,9 @@ public class MainActivity extends AppCompatActivity{
         mCategoriesRecyclerView.setLayoutManager(layoutManager);
         mCategoriesRecyclerView.setAdapter(adapter);
 
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+        mCategoriesRecyclerView.addItemDecoration(dividerItemDecoration);
+
         mCategoryViewModel = new CategoryViewModel(getApplication());
 
         mCategoryViewModel.getAllCategories().observe(this, adapter::setCategoryList);
@@ -61,5 +66,16 @@ public class MainActivity extends AppCompatActivity{
         inflater.inflate(R.menu.main_app_bar_menu, menu);
         return true;
     }
+
+
+    private void initDialog() {
+        mCategoryDialog = new CategoryDialog();
+        mMainFab = findViewById(R.id.main_activity_fab);
+        mMainFab.setOnClickListener(v -> {
+            mCategoryDialog.show(getSupportFragmentManager(),"");
+        });
+    }
+
+
 
 }
