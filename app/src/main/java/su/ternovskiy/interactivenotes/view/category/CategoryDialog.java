@@ -1,4 +1,4 @@
-package su.ternovskiy.interactivenotes.view;
+package su.ternovskiy.interactivenotes.view.category;
 
 import androidx.fragment.app.DialogFragment;
 
@@ -31,7 +31,6 @@ public class CategoryDialog extends DialogFragment implements View.OnClickListen
         return v;
     }
 
-    @SuppressLint("ResourceAsColor")
     @Override
     public void onClick(View v) {
         mCategoryViewModel = new CategoryViewModel(getActivity().getApplication());

@@ -18,4 +18,10 @@ public interface NotesDao {
 
     @Query("DELETE FROM categories")
     void deleteAll();
+
+    @Query("SELECT * FROM notes WHERE category_id = :categoryId")
+    LiveData<List<Note>> getNotesByCategoryId(long categoryId);
+
+    @Insert
+    void addNote(Note note);
 }

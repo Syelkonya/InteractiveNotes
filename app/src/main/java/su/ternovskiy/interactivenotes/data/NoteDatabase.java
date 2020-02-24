@@ -9,6 +9,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -49,22 +50,32 @@ public abstract class NoteDatabase extends RoomDatabase {
                 NotesDao dao = INSTANCE.getNotesDao();
                 dao.deleteAll();
 
-                Category categoryS = new Category("SUPER",2);
+                Category categoryS = new Category("SUPER", 2);
                 dao.addCategory(categoryS);
 
-                Category categoryFood = new Category("STAR",1);
+                Category categoryFood = new Category("STAR", 1);
                 dao.addCategory(categoryFood);
 
-                Category categoryq = new Category("STA13R",12);
+                Category categoryq = new Category("STA13R", 12);
                 dao.addCategory(categoryq);
-                Category categoryw = new Category("ST1231AR",15);
+                Category categoryw = new Category("ST1231AR", 15);
                 dao.addCategory(categoryw);
-                Category categorye = new Category("ST12313AR",41);
+                Category categorye = new Category("ST12313AR", 41);
                 dao.addCategory(categorye);
-                Category categoryr = new Category("ST123AR",18);
+                Category categoryr = new Category("ST123AR", 18);
                 dao.addCategory(categoryr);
-                Category categoryt = new Category("ST123AR",11);
+                Category categoryt = new Category("ST123AR", 11);
                 dao.addCategory(categoryt);
+
+
+
+//                Note note = new Note();
+//                note.setCategoryId(1);
+//                note.setTitle("ZHOPA");
+//                note.setText("V OGNE");
+//                note.setDate(new Date(System.currentTimeMillis()));
+//                dao.addNote(note);
+
             });
 
         }

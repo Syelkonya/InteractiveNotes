@@ -1,4 +1,4 @@
-package su.ternovskiy.interactivenotes.view;
+package su.ternovskiy.interactivenotes.view.category;
 
 import android.app.Application;
 
@@ -25,4 +25,5 @@ public class CategoryViewModel {
     void addCategory(Category category){
         mRepository.addCategory(category);
     }
+
 }

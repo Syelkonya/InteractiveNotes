@@ -1,7 +1,6 @@
 package su.ternovskiy.interactivenotes.data;
 
 import android.app.Application;
-import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
@@ -11,6 +10,8 @@ public class NoteRepository {
 
     private NotesDao mNotesDao;
     private LiveData<List<Category>> mAllCategories;
+    private LiveData<List<Note>> mNotesByCategoryId;
+
 
     public NoteRepository(Application application) {
         NoteDatabase noteDatabase = NoteDatabase.getDatabase(application);
@@ -26,5 +27,18 @@ public class NoteRepository {
         NoteDatabase.databaseWriteExecutor.execute(() -> {
             mNotesDao.addCategory(category);
         } );
+    }
+
+    public LiveData<List<Note>> getNotesByCategoryId(long categoryId){
+        NoteDatabase.databaseWriteExecutor.execute(() ->{
+            mNotesByCategoryId = mNotesDao.getNotesByCategoryId(categoryId);
+        });
+        return mNotesByCategoryId;
+    }
+
+    public void addNote(Note note){
+        NoteDatabase.databaseWriteExecutor.execute(() -> {
+          mNotesDao.addNote(note);
+        });
     }
 }

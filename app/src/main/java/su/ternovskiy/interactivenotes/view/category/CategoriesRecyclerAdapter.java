@@ -1,4 +1,4 @@
-package su.ternovskiy.interactivenotes.view;
+package su.ternovskiy.interactivenotes.view.category;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 
@@ -16,16 +17,20 @@ import java.util.List;
 import su.ternovskiy.interactivenotes.R;
 import su.ternovskiy.interactivenotes.data.Category;
 
-public class CategoriesRecyclerAdapter extends Adapter<CategoriesRecyclerAdapter.CategoriesViewHolder> {
+public class CategoriesRecyclerAdapter extends Adapter<CategoriesRecyclerAdapter.BaseViewHolder> {
 
     private List<Category> mCategoryList;
     private final LayoutInflater mLayoutInflater;
+    private OnCategoryClickListener mCategoryClickListener;
 
 
     CategoriesRecyclerAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
     }
 
+    void setClickListener(@Nullable OnCategoryClickListener onCategoryClickListener) {
+        mCategoryClickListener = onCategoryClickListener;
+    }
 
     @NonNull
     @Override
@@ -35,9 +40,11 @@ public class CategoriesRecyclerAdapter extends Adapter<CategoriesRecyclerAdapter
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategoriesViewHolder holder, int position) {
-        holder.bindView(mCategoryList.get(position));
+    public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
+        Category category = mCategoryList.get(position);
+        ((CategoriesViewHolder) holder).bindView(category);
     }
+
 
     @Override
     public int getItemCount() {
@@ -51,7 +58,13 @@ public class CategoriesRecyclerAdapter extends Adapter<CategoriesRecyclerAdapter
         notifyDataSetChanged();
     }
 
-    static class CategoriesViewHolder extends RecyclerView.ViewHolder {
+    static abstract class BaseViewHolder extends RecyclerView.ViewHolder {
+        BaseViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+    }
+
+    private class CategoriesViewHolder extends BaseViewHolder{
 
         private TextView mCategoryNameTextView;
         private TextView mQuantityOfNotes;
@@ -63,14 +76,29 @@ public class CategoriesRecyclerAdapter extends Adapter<CategoriesRecyclerAdapter
             mCategoryNameTextView = itemView.findViewById(R.id.category_name_text_view);
             mQuantityOfNotes = itemView.findViewById(R.id.quantity_of_notes_text_view);
             mCategoryIconImageView = itemView.findViewById(R.id.category_icon_image_view);
+
+
         }
 
 
-        public void bindView(@NonNull Category category) {
+        void bindView(@NonNull Category category) {
             mCategoryNameTextView.setText(category.getCategoryName());
             mQuantityOfNotes.setText(category.getCategoryPosition() + "");
             mCategoryIconImageView.setImageResource(R.drawable.ic_launcher_background);
+            itemView.setOnClickListener(v -> {
+                if (mCategoryClickListener != null) {
+                    mCategoryClickListener.onItemClick(category);
+                }
+            });
+            itemView.setOnLongClickListener(v -> {
+                if (mCategoryClickListener != null){
+                    mCategoryClickListener.onItemLongClick(category);
+                    return true;
+                }else
+                    return false;
+            });
         }
+
     }
 }
 

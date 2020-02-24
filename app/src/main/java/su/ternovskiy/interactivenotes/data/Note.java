@@ -30,6 +30,8 @@ public class Note {
     @ColumnInfo(name = "date", index = true)
     private Date mDate;
 
+
+
     public long getId() {
         return mId;
     }
