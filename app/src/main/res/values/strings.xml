@@ -4,4 +4,6 @@
     <string name="food">Еда</string>
     <string name="category_name">Category name</string>
     <string name="do_you_want_to_add_category">Do you want to add category?</string>
+    <string name="title_name">Title</string>
+    <string name="text">Text</string>
 </resources>

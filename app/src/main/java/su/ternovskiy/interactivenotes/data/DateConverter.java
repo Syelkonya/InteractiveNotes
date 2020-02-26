@@ -4,7 +4,7 @@ import androidx.room.TypeConverter;
 
 import java.util.Date;
 
-public class DataConverter {
+public class DateConverter {
 
     @TypeConverter
     public static long fromDate(Date date) {

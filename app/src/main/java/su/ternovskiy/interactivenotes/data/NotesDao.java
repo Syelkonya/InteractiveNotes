@@ -10,8 +10,11 @@ import java.util.List;
 @Dao
 public interface NotesDao {
 
-    @Query("SELECT * FROM categories ORDER BY position ASC")
+    @Query("SELECT * FROM categories ORDER BY id ASC")
     LiveData<List<Category>> getAllCategories();
+
+//    @Query("SELECT position FROM categories")
+//    List<Long> getAllCategoryPositions();
 
     @Insert
     void addCategory(Category category);

@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -15,6 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import su.ternovskiy.interactivenotes.R;
 import su.ternovskiy.interactivenotes.data.Category;
@@ -30,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
     private CategoryViewModel mCategoryViewModel;
     private DialogFragment mCategoryDialog;
     private OnCategoryClickListener mOnCategoryClickListener;
+    private CategoriesRecyclerAdapter mAdapter;
+    private List<Category> mCategoryList;
+    private final String mCategoryNameExtra = "CATEGORY_NAME";
+    private final String mCategoryIdExtra = "CATEGORY_ID";
 
 
     @Override
@@ -52,15 +63,15 @@ public class MainActivity extends AppCompatActivity {
 
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
-        final CategoriesRecyclerAdapter adapter = new CategoriesRecyclerAdapter(this);
+        mAdapter = new CategoriesRecyclerAdapter(this);
 
         mOnCategoryClickListener = new OnCategoryClickListener() {
             @Override
             public void onItemClick(Category category) {
                 Log.d(TAG, "onItemClick: SHORT");
                 Intent intent = new Intent(getApplicationContext(), NoteListActivity.class);
-                intent.putExtra("CATEGORY_NAME", category.getCategoryName());
-                intent.putExtra("CATEGORY_ID",category.getId());
+                intent.putExtra(mCategoryNameExtra, category.getCategoryName());
+                intent.putExtra(mCategoryIdExtra, category.getId());
                 startActivity(intent);
 
             }
@@ -72,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-        adapter.setClickListener(mOnCategoryClickListener);
+        mAdapter.setClickListener(mOnCategoryClickListener);
         mCategoriesRecyclerView.setLayoutManager(layoutManager);
-        mCategoriesRecyclerView.setAdapter(adapter);
+        mCategoriesRecyclerView.setAdapter(mAdapter);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(),
                 DividerItemDecoration.VERTICAL);
@@ -82,7 +93,9 @@ public class MainActivity extends AppCompatActivity {
 
         mCategoryViewModel = new CategoryViewModel(getApplication());
 
-        mCategoryViewModel.getAllCategories().observe(this, adapter::setCategoryList);
+        mCategoryList = mCategoryViewModel.getAllCategories().getValue();
+
+        mCategoryViewModel.getAllCategories().observe(this, mAdapter::setCategoryList);
     }
 
 
@@ -90,6 +103,22 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_app_bar_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mAdapter.getFilter().filter(newText);
+                return true;
+            }
+        });
         return true;
     }
 

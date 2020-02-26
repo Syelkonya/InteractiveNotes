@@ -36,7 +36,7 @@ public class CategoryDialog extends DialogFragment implements View.OnClickListen
         mCategoryViewModel = new CategoryViewModel(getActivity().getApplication());
         String categoryName = mCategoryNameEditText.getText().toString();
         if (!categoryName.equals("")) {
-            Category plusCategory = new Category(categoryName, (long) (Math.random() * 100));
+            Category plusCategory = new Category(categoryName, (long) (Math.random()*100));
             mCategoryViewModel.addCategory(plusCategory);
             mCategoryNameEditText.setText("");
             dismiss();

@@ -44,6 +44,7 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_add"
+        android:transitionName="fab_shared_transition"
         app:borderWidth="@dimen/zero" />
 
 

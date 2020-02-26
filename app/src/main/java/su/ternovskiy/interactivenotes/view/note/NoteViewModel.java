@@ -3,6 +3,7 @@ package su.ternovskiy.interactivenotes.view.note;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
@@ -18,7 +19,13 @@ public class NoteViewModel {
         mNoteByCategoryId = mRepository.getNotesByCategoryId(categoryId);
     }
 
+
+
     LiveData<List<Note>> getNotesByCategoryId(){
+
+//        if (mNoteByCategoryId == null) {
+//            mNoteByCategoryId = new MutableLiveData<List<Note>>();
+//        }
         return mNoteByCategoryId;
     }
 

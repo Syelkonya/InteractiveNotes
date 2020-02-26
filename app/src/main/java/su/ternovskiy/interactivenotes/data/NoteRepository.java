@@ -11,12 +11,14 @@ public class NoteRepository {
     private NotesDao mNotesDao;
     private LiveData<List<Category>> mAllCategories;
     private LiveData<List<Note>> mNotesByCategoryId;
+    private List<Long> mAllCategoryPositions;
 
 
     public NoteRepository(Application application) {
         NoteDatabase noteDatabase = NoteDatabase.getDatabase(application);
         mNotesDao = noteDatabase.getNotesDao();
         mAllCategories = mNotesDao.getAllCategories();
+//        mAllCategoryPositions = mNotesDao.getAllCategoryPositions();
     }
 
     public LiveData<List<Category>> getAllCategories() {
@@ -41,4 +43,8 @@ public class NoteRepository {
           mNotesDao.addNote(note);
         });
     }
+
+//    public List<Long> getAllCategoryPositions() {
+//        return mAllCategoryPositions;
+//    }
 }

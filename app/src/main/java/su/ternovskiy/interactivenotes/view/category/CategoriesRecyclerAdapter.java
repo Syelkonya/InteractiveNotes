@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,16 +14,19 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import su.ternovskiy.interactivenotes.R;
 import su.ternovskiy.interactivenotes.data.Category;
 
-public class CategoriesRecyclerAdapter extends Adapter<CategoriesRecyclerAdapter.BaseViewHolder> {
+public class CategoriesRecyclerAdapter extends Adapter<CategoriesRecyclerAdapter.BaseViewHolder> implements Filterable {
 
     private List<Category> mCategoryList;
     private final LayoutInflater mLayoutInflater;
     private OnCategoryClickListener mCategoryClickListener;
+    private List<Category> mCategoryListFull;
 
 
     CategoriesRecyclerAdapter(Context context) {
@@ -55,8 +60,15 @@ public class CategoriesRecyclerAdapter extends Adapter<CategoriesRecyclerAdapter
 
     void setCategoryList(List<Category> categories) {
         mCategoryList = categories;
+        mCategoryListFull = new ArrayList<>(mCategoryList);
         notifyDataSetChanged();
     }
+
+    @Override
+    public Filter getFilter() {
+        return mFilter;
+    }
+
 
     static abstract class BaseViewHolder extends RecyclerView.ViewHolder {
         BaseViewHolder(@NonNull View itemView) {
@@ -98,8 +110,38 @@ public class CategoriesRecyclerAdapter extends Adapter<CategoriesRecyclerAdapter
                     return false;
             });
         }
-
     }
+
+
+    private Filter mFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Category> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(mCategoryListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (Category category : mCategoryListFull) {
+                    if (category.getCategoryName().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(category);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            mCategoryList.clear();
+            mCategoryList.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }
 
 
