@@ -45,7 +45,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
         mCategoryId = getIntent().getLongExtra(mCATEGORYId, 0);
 
-        mNoteViewModel = new NoteViewModel(getApplication(), mCategoryId);
+        mNoteViewModel = new NoteViewModel(getApplication());
     }
 
     @Override

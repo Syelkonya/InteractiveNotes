@@ -32,6 +32,7 @@ public abstract class NoteDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             NoteDatabase.class, "note_database")
+                            .allowMainThreadQueries()
                             .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
@@ -51,21 +52,22 @@ public abstract class NoteDatabase extends RoomDatabase {
                 NotesDao dao = INSTANCE.getNotesDao();
 //                dao.deleteAll();
 //
-//                Category categoryS = new Category("SUPER", 2);
+//                Category categoryS = new Category("SUPER");
 //                dao.addCategory(categoryS);
 //
-//                Category categoryFood = new Category("STAR", 1);
+//                Category categoryFood = new Category("STAR");
 //                dao.addCategory(categoryFood);
 //
-//                Category categoryq = new Category("STA13R", 4);
+//                Category categoryq = new Category("STA13R");
 //                dao.addCategory(categoryq);
-//                Category categoryw = new Category("ST1231AR", 5);
+//                Category categoryw = new Category("ST1231AR");
+//                Category categoryw = new Category("ST1231AR");
 //                dao.addCategory(categoryw);
-//                Category categorye = new Category("ST12313AR", 3);
+//                Category categorye = new Category("ST12313AR");
 //                dao.addCategory(categorye);
-//                Category categoryr = new Category("ST123AR", 6);
+//                Category categoryr = new Category("ST123AR");
 //                dao.addCategory(categoryr);
-//                Category categoryt = new Category("ST123AR", 7);
+//                Category categoryt = new Category("ST123AR");
 //                dao.addCategory(categoryt);
 //
 //

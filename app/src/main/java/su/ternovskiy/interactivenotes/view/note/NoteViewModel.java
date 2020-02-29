@@ -13,19 +13,18 @@ import su.ternovskiy.interactivenotes.data.NoteRepository;
 public class NoteViewModel {
     private NoteRepository mRepository;
     private LiveData<List<Note>> mNoteByCategoryId;
+    private LiveData<List<Note>> mAllNotes;
 
-    public NoteViewModel(Application application, long categoryId){
+    public NoteViewModel(Application application){
         mRepository = new NoteRepository(application);
-        mNoteByCategoryId = mRepository.getNotesByCategoryId(categoryId);
+//        mNoteByCategoryId = mRepository.getNotesByCategoryId(categoryId);
     }
 
-
+    LiveData<List<Note>> getAllNotes(){
+        return mAllNotes;
+    }
 
     LiveData<List<Note>> getNotesByCategoryId(){
-
-//        if (mNoteByCategoryId == null) {
-//            mNoteByCategoryId = new MutableLiveData<List<Note>>();
-//        }
         return mNoteByCategoryId;
     }
 

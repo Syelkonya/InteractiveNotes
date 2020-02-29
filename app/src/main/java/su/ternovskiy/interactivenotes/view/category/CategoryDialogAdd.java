@@ -13,7 +13,7 @@ import android.widget.EditText;
 import su.ternovskiy.interactivenotes.R;
 import su.ternovskiy.interactivenotes.data.Category;
 
-public class CategoryDialog extends DialogFragment implements View.OnClickListener {
+public class CategoryDialogAdd extends DialogFragment implements View.OnClickListener {
 
     private EditText mCategoryNameEditText;
     private CategoryViewModel mCategoryViewModel;
@@ -36,7 +36,7 @@ public class CategoryDialog extends DialogFragment implements View.OnClickListen
         mCategoryViewModel = new CategoryViewModel(getActivity().getApplication());
         String categoryName = mCategoryNameEditText.getText().toString();
         if (!categoryName.equals("")) {
-            Category plusCategory = new Category(categoryName, (long) (Math.random()*100));
+            Category plusCategory = new Category(categoryName);
             mCategoryViewModel.addCategory(plusCategory);
             mCategoryNameEditText.setText("");
             dismiss();

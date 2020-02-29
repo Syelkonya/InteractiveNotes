@@ -7,28 +7,32 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import su.ternovskiy.interactivenotes.R;
 import su.ternovskiy.interactivenotes.data.Category;
+import su.ternovskiy.interactivenotes.data.Note;
 import su.ternovskiy.interactivenotes.view.note.NoteListActivity;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements CategoryDialogUpdateOrDelete.CategoryDialogUpdateOrDeleteListener,
+        CategoryDialogDelete.CategoryDialogDeleteListener,
+        CategoryDialogUpdate.CategoryDialogUpdateListener {
 
     private String TAG = "MAINACTIVITY TAAAGGG";
     private Toolbar mMainToolbar;
@@ -36,11 +40,18 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mCategoriesRecyclerView;
     private CategoryViewModel mCategoryViewModel;
     private DialogFragment mCategoryDialog;
+    private DialogFragment mCategoryDialogUpdateOrDelete;
+    private DialogFragment mCategoryDialogDelete;
+    private DialogFragment mCategoryDialogUpdate;
     private OnCategoryClickListener mOnCategoryClickListener;
     private CategoriesRecyclerAdapter mAdapter;
-    private List<Category> mCategoryList;
+    private LiveData<List<Category>> mCategoryList;
+    private LiveData<List<Note>> mNoteList;
+    private Category mCategoryOnItemLongClick;
     private final String mCategoryNameExtra = "CATEGORY_NAME";
     private final String mCategoryIdExtra = "CATEGORY_ID";
+    private final int mUPDATE_WAS_PUSHED = 1;
+    private final int mDELETE_WAS_PUSHED = 2;
 
 
     @Override
@@ -73,15 +84,16 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(mCategoryNameExtra, category.getCategoryName());
                 intent.putExtra(mCategoryIdExtra, category.getId());
                 startActivity(intent);
-
             }
 
             @Override
             public void onItemLongClick(Category category) {
                 Log.d(TAG, "onItemLongClick: LONG");
+                mCategoryDialogUpdateOrDelete = new CategoryDialogUpdateOrDelete();
+                mCategoryDialogUpdateOrDelete.show(getSupportFragmentManager(), "UPDATE_OR_DELETE");
+                mCategoryOnItemLongClick = category;
             }
         };
-
 
         mAdapter.setClickListener(mOnCategoryClickListener);
         mCategoriesRecyclerView.setLayoutManager(layoutManager);
@@ -93,9 +105,10 @@ public class MainActivity extends AppCompatActivity {
 
         mCategoryViewModel = new CategoryViewModel(getApplication());
 
-        mCategoryList = mCategoryViewModel.getAllCategories().getValue();
+        mCategoryList = mCategoryViewModel.getAllCategories();
 
         mCategoryViewModel.getAllCategories().observe(this, mAdapter::setCategoryList);
+
     }
 
 
@@ -124,11 +137,38 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initDialog() {
-        mCategoryDialog = new CategoryDialog();
+        mCategoryDialog = new CategoryDialogAdd();
         mMainFab = findViewById(R.id.main_activity_fab);
         mMainFab.setOnClickListener(v -> {
-            mCategoryDialog.show(getSupportFragmentManager(), "");
+            mCategoryDialog.show(getSupportFragmentManager(), "CATEGORY_DIALOG");
         });
+    }
+
+
+    @Override
+    public void whichButtonWasPushed(int pushedButton) {
+        switch (pushedButton){
+            case mDELETE_WAS_PUSHED:
+                mCategoryDialogDelete = new CategoryDialogDelete();
+                mCategoryDialogDelete.show(getSupportFragmentManager(), "DELETE_DIALOG");
+                break;
+            case mUPDATE_WAS_PUSHED:
+                mCategoryDialogUpdate = new CategoryDialogUpdate();
+                mCategoryDialogUpdate.show(getSupportFragmentManager(), "UPDATE_DIALOG");
+                break;
+        }
+    }
+
+    @Override
+    public void isDeleteButtonPushedSecondly(Boolean isDeleteClicked) {
+        if (isDeleteClicked)
+        mCategoryViewModel.deleteCategory(mCategoryOnItemLongClick);
+    }
+
+    @Override
+    public void isUpdateButtonClicked(String categoryNameToUpdate) {
+        mCategoryOnItemLongClick.setCategoryName(categoryNameToUpdate);
+        mCategoryViewModel.updateCategory(mCategoryOnItemLongClick);
     }
 
 

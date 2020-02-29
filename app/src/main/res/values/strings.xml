@@ -6,4 +6,13 @@
     <string name="do_you_want_to_add_category">Do you want to add category?</string>
     <string name="title_name">Title</string>
     <string name="text">Text</string>
+    <string name="rename_category">Rename category</string>
+    <string name="delete_category">delete category</string>
+    <string name="delete">delete</string>
+    <string name="cancel">cancel</string>
+    <string name="want_to_delete_category">Delete Category?</string>
+    <string name="delete_category_explain_text">This will delete the selected category and all notes attached to it.</string>
+    <string name="do_you_want_to_rename_category">Do you want to rename category?</string>
+    <string name="rename">rename</string>
+    <string name="enter_new_name">New name</string>
 </resources>

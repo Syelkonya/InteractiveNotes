@@ -2,49 +2,47 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/consLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/dialog_background">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/update_category_title_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/standart_margin"
-        android:text="@string/do_you_want_to_add_category"
+        android:text="@string/do_you_want_to_rename_category"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/big_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/add_category_name_edit_text"
+        android:id="@+id/update_category_name_edit_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/standart_margin"
         android:layout_marginEnd="@dimen/standart_margin"
-        android:hint="@string/category_name"
+        android:hint="@string/enter_new_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/update_category_title_text_view" />
 
     <Button
-        android:id="@+id/add_category_name_button"
+        android:id="@+id/update_category_name_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/standart_margin"
         android:layout_marginBottom="@dimen/small_margin"
         android:padding="@dimen/standart_margin"
-        android:text="add"
+        android:text="@string/rename"
         android:textAlignment="center"
         android:textColor="@color/colorBlueLight"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_category_name_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/update_category_name_edit_text"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
 
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

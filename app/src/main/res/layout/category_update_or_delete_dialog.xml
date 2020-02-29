@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background"
+    android:orientation="vertical">
+
+
+    <Button
+        android:id="@+id/update_category_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/standart_margin"
+        android:layout_marginLeft="@dimen/standart_margin"
+        android:layout_marginRight="@dimen/standart_margin"
+        android:background="@color/colorWhite"
+        android:text="@string/rename_category"
+        android:textColor="@color/colorBlack"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+       />
+
+    <Button
+        android:id="@+id/delete_category_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standart_margin"
+        android:background="@color/colorWhite"
+        android:text="@string/delete_category"
+        android:textColor="@color/colorBlack"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+         />
+
+
+</LinearLayout>

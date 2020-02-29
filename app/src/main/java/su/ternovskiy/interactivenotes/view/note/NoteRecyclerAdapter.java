@@ -12,7 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import su.ternovskiy.interactivenotes.R;
@@ -47,6 +49,7 @@ public class NoteRecyclerAdapter extends Adapter<NoteRecyclerAdapter.BaseViewHol
     }
 
 
+
     @Override
     public int getItemCount() {
         if (mNoteList != null)
@@ -55,6 +58,23 @@ public class NoteRecyclerAdapter extends Adapter<NoteRecyclerAdapter.BaseViewHol
     }
 
     void setNoteList(List<Note> notes) {
+
+//        mNoteList = new ArrayList<>();
+//
+//        Note note = new Note();
+//        note.setCategoryId(1);
+//        note.setTitle("ZHOPA");
+//        note.setText("V OGNE");
+//        note.setDate(new Date(System.currentTimeMillis()));
+//        mNoteList.add(note);
+//
+//        Note note1 = new Note();
+//        note.setCategoryId(1);
+//        note.setTitle("Прощай");
+//        note.setText("люби");
+//        note.setDate(new Date(System.currentTimeMillis()));
+//        mNoteList.add(note1);
+
         mNoteList = notes;
         notifyDataSetChanged();
     }
@@ -96,6 +116,9 @@ public class NoteRecyclerAdapter extends Adapter<NoteRecyclerAdapter.BaseViewHol
         }
 
     }
+
+
+
 }
 
 

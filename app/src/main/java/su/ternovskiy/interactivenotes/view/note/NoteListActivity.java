@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +31,8 @@ import su.ternovskiy.interactivenotes.R;
 import su.ternovskiy.interactivenotes.data.Note;
 import su.ternovskiy.interactivenotes.data.NoteRepository;
 import su.ternovskiy.interactivenotes.data.NotesDao;
+import su.ternovskiy.interactivenotes.view.category.CategoryViewModel;
+import su.ternovskiy.interactivenotes.view.category.MainActivity;
 
 public class NoteListActivity extends AppCompatActivity {
 
@@ -36,12 +40,14 @@ public class NoteListActivity extends AppCompatActivity {
     private long mCategoryId;
     private RecyclerView mNoteRecyclerView;
     private NoteViewModel mNoteViewModel;
+    private CategoryViewModel mCategoryViewModel;
     private NoteRepository mNoteRepository;
     private OnNoteClickListener mOnNoteClickListener;
     private FloatingActionButton mAddNoteFab;
     private LiveData<List<Note>> mNoteList;
     private String TAG = "NoteListActivity";
     private String mCategoryName;
+    private NotesDao mNotesDao;
     private final String mCATEGORYName = "CATEGORY_NAME";
     private final String mCATEGORYId = "CATEGORY_ID";
 
@@ -87,29 +93,20 @@ public class NoteListActivity extends AppCompatActivity {
         mNoteRecyclerView.addItemDecoration(dividerItemDecoration);
 
 
-        mNoteViewModel = new NoteViewModel(getApplication(), mCategoryId);
+        mNoteViewModel = new NoteViewModel(getApplication());
+//
+//        mCategoryViewModel = new CategoryViewModel(getApplication());
+//        mCategoryViewModel.getAllNotes().observe(this, adapter::setNoteList);
 
+        mNoteList = mNoteRepository.getNotesByCategoryId(mCategoryId);
 
-        myMethod();
-
-
-//        if (mNoteList != null)
-//            adapter.setNoteList(mNoteList);
         mNoteList.observe(this, adapter::setNoteList);
+
+//        adapter.setNoteList(mNoteList);
         mNoteRecyclerView.setAdapter(adapter);
 
 
     }
-
-    public void myMethod() {
-        if (Looper.myLooper() == Looper.getMainLooper()) {
-
-
-            mNoteList = mNoteViewModel.getNotesByCategoryId();
-        } else {
-        }
-    }
-
 
 
     private void initAddNoteActivity() {

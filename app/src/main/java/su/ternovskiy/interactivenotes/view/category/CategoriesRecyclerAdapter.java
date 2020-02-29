@@ -95,7 +95,7 @@ public class CategoriesRecyclerAdapter extends Adapter<CategoriesRecyclerAdapter
 
         void bindView(@NonNull Category category) {
             mCategoryNameTextView.setText(category.getCategoryName());
-            mQuantityOfNotes.setText(category.getCategoryPosition() + "");
+            mQuantityOfNotes.setText(Math.PI + "");
             mCategoryIconImageView.setImageResource(R.drawable.ic_launcher_background);
             itemView.setOnClickListener(v -> {
                 if (mCategoryClickListener != null) {

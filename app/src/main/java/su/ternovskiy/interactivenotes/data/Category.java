@@ -15,15 +15,9 @@ public class Category {
     @ColumnInfo (name = "name")
     private String mCategoryName;
 
-    @ColumnInfo(name = "position")
-    private long mCategoryPosition;
-
-
-    public Category(@NonNull String categoryName, long categoryPosition) {
+    public Category(@NonNull String categoryName) {
         mCategoryName = categoryName;
-        mCategoryPosition= categoryPosition;
     }
-
 
     public long getId() {
         return mId;
@@ -41,11 +35,4 @@ public class Category {
         mCategoryName = categoryName;
     }
 
-    public long getCategoryPosition() {
-        return mCategoryPosition;
-    }
-
-    public void setCategoryPosition(long categoryPosition) {
-        mCategoryPosition = categoryPosition;
-    }
 }

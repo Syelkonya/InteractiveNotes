@@ -44,6 +44,18 @@ public class NoteRepository {
         });
     }
 
+    public void deleteCategory(Category category){
+        NoteDatabase.databaseWriteExecutor.execute(() -> {
+            mNotesDao.deleteCategory(category);
+        });
+    }
+
+    public void updateCategory(Category category){
+        NoteDatabase.databaseWriteExecutor.execute(() -> {
+            mNotesDao.updateCategory(category);
+        });
+    }
+
 //    public List<Long> getAllCategoryPositions() {
 //        return mAllCategoryPositions;
 //    }
