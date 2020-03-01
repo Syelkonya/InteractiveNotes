@@ -15,4 +15,7 @@
     <string name="do_you_want_to_rename_category">Do you want to rename category?</string>
     <string name="rename">rename</string>
     <string name="enter_new_name">New name</string>
+    <string name="there_is_no_notes_yet">There is no notes yet</string>
+    <string name="note_was_removed">Note was removed from the list</string>
+    <string name="return_note">RETURN</string>
 </resources>

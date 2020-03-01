@@ -15,12 +15,13 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import su.ternovskiy.interactivenotes.R;
 import su.ternovskiy.interactivenotes.data.Note;
 
-public class NoteRecyclerAdapter extends Adapter<NoteRecyclerAdapter.BaseViewHolder> {
+public class NoteRecyclerAdapter extends Adapter<NoteRecyclerAdapter.BaseViewHolder> implements NoteItemTouchHelper{
 
     private List<Note> mNoteList;
     private final LayoutInflater mLayoutInflater;
@@ -49,7 +50,6 @@ public class NoteRecyclerAdapter extends Adapter<NoteRecyclerAdapter.BaseViewHol
     }
 
 
-
     @Override
     public int getItemCount() {
         if (mNoteList != null)
@@ -57,27 +57,40 @@ public class NoteRecyclerAdapter extends Adapter<NoteRecyclerAdapter.BaseViewHol
         else return 0;
     }
 
+    List<Note> getNoteList() {
+        return mNoteList;
+    }
+
     void setNoteList(List<Note> notes) {
-
-//        mNoteList = new ArrayList<>();
-//
-//        Note note = new Note();
-//        note.setCategoryId(1);
-//        note.setTitle("ZHOPA");
-//        note.setText("V OGNE");
-//        note.setDate(new Date(System.currentTimeMillis()));
-//        mNoteList.add(note);
-//
-//        Note note1 = new Note();
-//        note.setCategoryId(1);
-//        note.setTitle("Прощай");
-//        note.setText("люби");
-//        note.setDate(new Date(System.currentTimeMillis()));
-//        mNoteList.add(note1);
-
         mNoteList = notes;
         notifyDataSetChanged();
     }
+
+    void removeNoteItem(int position) {
+        mNoteList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(Note note, int position) {
+        mNoteList.add(position, note);
+        notifyItemInserted(position);
+    }
+
+    @Override
+    public void onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(mNoteList, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(mNoteList, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+
 
     static abstract class BaseViewHolder extends RecyclerView.ViewHolder {
         BaseViewHolder(@NonNull View itemView) {
@@ -116,7 +129,6 @@ public class NoteRecyclerAdapter extends Adapter<NoteRecyclerAdapter.BaseViewHol
         }
 
     }
-
 
 
 }

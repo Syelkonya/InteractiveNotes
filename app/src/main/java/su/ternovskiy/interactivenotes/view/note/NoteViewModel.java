@@ -7,28 +7,37 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
+import su.ternovskiy.interactivenotes.data.Category;
 import su.ternovskiy.interactivenotes.data.Note;
+import su.ternovskiy.interactivenotes.data.NoteDatabase;
 import su.ternovskiy.interactivenotes.data.NoteRepository;
 
-public class NoteViewModel {
+class NoteViewModel {
     private NoteRepository mRepository;
-    private LiveData<List<Note>> mNoteByCategoryId;
-    private LiveData<List<Note>> mAllNotes;
 
-    public NoteViewModel(Application application){
+
+    NoteViewModel(Application application){
         mRepository = new NoteRepository(application);
-//        mNoteByCategoryId = mRepository.getNotesByCategoryId(categoryId);
     }
 
-    LiveData<List<Note>> getAllNotes(){
-        return mAllNotes;
+
+    LiveData<List<Note>> getNotesByCategoryId(long categoryId){
+        return mRepository.getNotesByCategoryId(categoryId);
     }
 
-    LiveData<List<Note>> getNotesByCategoryId(){
-        return mNoteByCategoryId;
+    List<Note> getNotesByCategoryIdList(long categoryId){
+        return mRepository.getNotesByCategoryIdList(categoryId);
     }
 
-    public void addNote(Note note){
+    void addNote(Note note){
         mRepository.addNote(note);
+    }
+
+    void updateNote(Note note){
+        mRepository.updateNote(note);
+    }
+
+    public void deleteNote(Note note){
+       mRepository.deleteNote(note);
     }
 }

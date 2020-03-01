@@ -18,7 +18,7 @@ public class NoteRepository {
         NoteDatabase noteDatabase = NoteDatabase.getDatabase(application);
         mNotesDao = noteDatabase.getNotesDao();
         mAllCategories = mNotesDao.getAllCategories();
-//        mAllCategoryPositions = mNotesDao.getAllCategoryPositions();
+
     }
 
     public LiveData<List<Category>> getAllCategories() {
@@ -56,7 +56,19 @@ public class NoteRepository {
         });
     }
 
-//    public List<Long> getAllCategoryPositions() {
-//        return mAllCategoryPositions;
-//    }
+    public List<Note> getNotesByCategoryIdList(long categoryId) {
+        return mNotesDao.getNotesByCategoryIdList(categoryId);
+    }
+
+    public void updateNote(Note note){
+        NoteDatabase.databaseWriteExecutor.execute(() -> {
+            mNotesDao.updateNote(note);
+        });
+    }
+
+    public void deleteNote(Note note){
+        NoteDatabase.databaseWriteExecutor.execute(() -> {
+            mNotesDao.deleteNote(note);
+        });
+    }
 }

@@ -35,4 +35,13 @@ public interface NotesDao {
 
     @Insert
     void addNote(Note note);
+
+    @Query("SELECT * FROM notes WHERE category_id = :categoryId")
+    List<Note> getNotesByCategoryIdList(long categoryId);
+
+    @Update
+    void updateNote(Note note);
+
+    @Delete
+    void deleteNote(Note note);
 }

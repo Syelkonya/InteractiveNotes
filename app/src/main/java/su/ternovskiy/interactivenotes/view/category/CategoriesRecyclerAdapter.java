@@ -29,6 +29,8 @@ public class CategoriesRecyclerAdapter extends Adapter<CategoriesRecyclerAdapter
     private List<Category> mCategoryListFull;
 
 
+
+
     CategoriesRecyclerAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
     }
@@ -82,6 +84,9 @@ public class CategoriesRecyclerAdapter extends Adapter<CategoriesRecyclerAdapter
         private TextView mQuantityOfNotes;
         private ImageView mCategoryIconImageView;
 
+
+
+
         private CategoriesViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -94,6 +99,7 @@ public class CategoriesRecyclerAdapter extends Adapter<CategoriesRecyclerAdapter
 
 
         void bindView(@NonNull Category category) {
+
             mCategoryNameTextView.setText(category.getCategoryName());
             mQuantityOfNotes.setText(Math.PI + "");
             mCategoryIconImageView.setImageResource(R.drawable.ic_launcher_background);

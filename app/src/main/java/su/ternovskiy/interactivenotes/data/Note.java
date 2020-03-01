@@ -1,5 +1,8 @@
 package su.ternovskiy.interactivenotes.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -12,7 +15,7 @@ import static androidx.room.ForeignKey.CASCADE;
 @Entity(tableName = "notes", foreignKeys =
 @ForeignKey(entity = Category.class, parentColumns = "id",
         childColumns = "category_id", onDelete = CASCADE))
-public class Note {
+public class Note implements Parcelable {
 
     @PrimaryKey (autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -31,6 +34,32 @@ public class Note {
     private Date mDate;
 
 
+    protected Note(Parcel in) {
+        mId = in.readLong();
+        mTitle = in.readString();
+        mText = in.readString();
+        mCategoryId = in.readLong();
+        mDate = new Date(in.readLong());
+    }
+
+    public static final Creator<Note> CREATOR = new Creator<Note>() {
+        @Override
+        public Note createFromParcel(Parcel in) {
+            return new Note(in);
+        }
+
+        @Override
+        public Note[] newArray(int size) {
+            return new Note[size];
+        }
+    };
+
+    public Note(String title, String text, long categoryId, Date date){
+        mTitle = title;
+        mText = text;
+        mCategoryId = categoryId;
+        mDate = date;
+    }
 
     public long getId() {
         return mId;
@@ -70,5 +99,19 @@ public class Note {
 
     public void setDate(Date date) {
         mDate = date;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(mId);
+        dest.writeString(mTitle);
+        dest.writeString(mText);
+        dest.writeLong(mCategoryId);
+        dest.writeLong(mDate.getTime());
     }
 }

@@ -15,21 +15,21 @@ import su.ternovskiy.interactivenotes.data.NoteRepository;
 public class CategoryViewModel {
     private NoteRepository mRepository;
     private LiveData<List<Category>> mAllCategories;
-    private LiveData<List<Note>> mAllNotes;
-//    private List<Long> mAllCategoryPositions;
+    private int mQuantityOfNotesByCategory;
 
-    public CategoryViewModel(Application application){
+
+    CategoryViewModel(Application application){
         mRepository = new NoteRepository(application);
         mAllCategories = mRepository.getAllCategories();
-//        mAllCategoryPositions = mRepository.getAllCategoryPositions();
+    }
+
+
+    int getQuantityOfNotes(long categoryId){
+        return mRepository.getNotesByCategoryIdList(categoryId).size();
     }
 
     LiveData<List<Category>> getAllCategories(){
         return mAllCategories;
-    }
-
-    LiveData<List<Note>> getAllNotes(){
-        return mAllNotes;
     }
 
 
