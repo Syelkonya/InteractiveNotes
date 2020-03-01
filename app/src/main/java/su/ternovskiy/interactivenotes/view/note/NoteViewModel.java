@@ -3,13 +3,11 @@ package su.ternovskiy.interactivenotes.view.note;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+
 
 import java.util.List;
 
-import su.ternovskiy.interactivenotes.data.Category;
 import su.ternovskiy.interactivenotes.data.Note;
-import su.ternovskiy.interactivenotes.data.NoteDatabase;
 import su.ternovskiy.interactivenotes.data.NoteRepository;
 
 class NoteViewModel {

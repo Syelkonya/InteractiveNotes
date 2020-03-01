@@ -163,12 +163,31 @@ public class NoteListActivity extends AppCompatActivity {
 
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                int fromPosition = viewHolder.getAdapterPosition();
+                int toPosition = target.getAdapterPosition();
+
+                if(dragFrom == -1) {
+                    dragTo =  fromPosition;
+                }
+                dragFrom = toPosition;
+
                 mNoteRecyclerAdapter.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
             }
+//
+//            @Override
+//            public void reallyMoved(int dragFrom, int dragTo) {
+//                super.reallyMoved(dragFrom, dragTo);
+//                Note fromNote =  mNoteList.get(dragFrom);
+//                Note toNote =  mNoteList.get(dragTo);
+//                long fromPos = fromNote.getPosition();
+//                long toPos = toNote.getPosition();
+//                fromNote.setPosition(toPos);
+//                toNote.setPosition(fromPos);
+//                mNoteViewModel.updateNote(fromNote);
+//                mNoteViewModel.updateNote(toNote);
+//            }
         };
-
-
 
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(noteItemTouchHelperCallback);
         itemTouchhelper.attachToRecyclerView(mNoteRecyclerView);

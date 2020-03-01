@@ -28,6 +28,8 @@ public abstract class NoteItemTouchHelperCallback extends ItemTouchHelper.Callba
     private int intrinsicHeight;
     private final int OPAQUE = 255;
     private final int TRANSPARENT = 0;
+    int dragFrom = -1;
+    int dragTo = -1;
 
 
     NoteItemTouchHelperCallback(Context context) {
@@ -103,5 +105,20 @@ public abstract class NoteItemTouchHelperCallback extends ItemTouchHelper.Callba
     public boolean isItemViewSwipeEnabled() {
         deleteDrawable.setAlpha(OPAQUE);
         return true;
+    }
+
+    @Override
+    public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+        super.clearView(recyclerView, viewHolder);
+
+        if(dragFrom != -1 && dragTo != -1 && dragFrom != dragTo) {
+            reallyMoved(dragFrom, dragTo);
+        }
+
+        dragFrom = dragTo = -1;
+    }
+
+    public void reallyMoved(int dragFrom, int dragTo) {
+
     }
 }

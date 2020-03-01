@@ -10,16 +10,19 @@
     app:elevation="@dimen/standart_elevation">
 
 
-    <ImageView
+    <TextView
         android:id="@+id/category_icon_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:padding="@dimen/small_padding"
+        android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        tools:src="@mipmap/ic_launcher" />
+        tools:src="@mipmap/ic_launcher"
+        tools:text="A" />
 
     <TextView
         android:id="@+id/category_name_text_view"

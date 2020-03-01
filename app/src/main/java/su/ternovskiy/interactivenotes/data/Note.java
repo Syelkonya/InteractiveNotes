@@ -34,12 +34,17 @@ public class Note implements Parcelable {
     private Date mDate;
 
 
+    @ColumnInfo(name = "position")
+    private long mPosition;
+
+
     protected Note(Parcel in) {
         mId = in.readLong();
         mTitle = in.readString();
         mText = in.readString();
         mCategoryId = in.readLong();
         mDate = new Date(in.readLong());
+        mPosition = in.readLong();
     }
 
     public static final Creator<Note> CREATOR = new Creator<Note>() {
@@ -101,6 +106,14 @@ public class Note implements Parcelable {
         mDate = date;
     }
 
+    public long getPosition() {
+        return mPosition;
+    }
+
+    public void setPosition(long position) {
+        mPosition = position;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -113,5 +126,6 @@ public class Note implements Parcelable {
         dest.writeString(mText);
         dest.writeLong(mCategoryId);
         dest.writeLong(mDate.getTime());
+        dest.writeLong(mPosition);
     }
 }

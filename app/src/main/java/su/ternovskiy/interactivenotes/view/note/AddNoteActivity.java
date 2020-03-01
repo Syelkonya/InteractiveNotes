@@ -72,6 +72,11 @@ public class AddNoteActivity extends AppCompatActivity {
                         mCategoryId,
                         new Date (System.currentTimeMillis()));
                 mNoteViewModel.addNote(note);
+//                int length = mNoteViewModel.getNotesByCategoryIdList(mCategoryId).size();
+//                Note noteAgain = mNoteViewModel.getNotesByCategoryIdList(mCategoryId).get(length-1);
+//                noteAgain.setPosition(noteAgain.getId());
+//                mNoteViewModel.updateNote(noteAgain);
+
             }else{
                 mNoteFromNoteListActivity.setTitle(String.valueOf(mNoteFromNoteListActivity.getTitle()));
                 mNoteFromNoteListActivity.setText(String.valueOf(mNoteTextEditText.getText()));

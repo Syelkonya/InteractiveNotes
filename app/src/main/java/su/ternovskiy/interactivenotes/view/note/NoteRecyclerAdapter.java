@@ -26,6 +26,7 @@ public class NoteRecyclerAdapter extends Adapter<NoteRecyclerAdapter.BaseViewHol
     private List<Note> mNoteList;
     private final LayoutInflater mLayoutInflater;
     private OnNoteClickListener mNoteClickListener;
+    private NoteViewModel mNoteViewModel;
 
 
     NoteRecyclerAdapter(Context context) {
@@ -89,7 +90,6 @@ public class NoteRecyclerAdapter extends Adapter<NoteRecyclerAdapter.BaseViewHol
         }
         notifyItemMoved(fromPosition, toPosition);
     }
-
 
 
     static abstract class BaseViewHolder extends RecyclerView.ViewHolder {

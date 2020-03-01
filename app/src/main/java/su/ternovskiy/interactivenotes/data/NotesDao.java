@@ -30,13 +30,13 @@ public interface NotesDao {
     @Query("SELECT * FROM notes")
     LiveData<List<Note>> getAllNotes();
 
-    @Query("SELECT * FROM notes WHERE category_id = :categoryId")
+    @Query("SELECT * FROM notes WHERE category_id = :categoryId ORDER BY position ASC")
     LiveData<List<Note>> getNotesByCategoryId(long categoryId);
 
     @Insert
     void addNote(Note note);
 
-    @Query("SELECT * FROM notes WHERE category_id = :categoryId")
+    @Query("SELECT * FROM notes WHERE category_id = :categoryId ORDER BY position ASC")
     List<Note> getNotesByCategoryIdList(long categoryId);
 
     @Update
@@ -44,4 +44,5 @@ public interface NotesDao {
 
     @Delete
     void deleteNote(Note note);
+
 }
