@@ -34,7 +34,7 @@ import su.ternovskiy.interactivenotes.data.Note;
 public class NoteListActivity extends AppCompatActivity {
 
     private Toolbar mNoteListToolbar;
-    private long mCategoryId;
+    private long mCATEGORY_ID;
     private RecyclerView mNoteRecyclerView;
     private NoteViewModel mNoteViewModel;
     private OnNoteClickListener mOnNoteClickListener;
@@ -74,13 +74,13 @@ public class NoteListActivity extends AppCompatActivity {
         mCategoryName = getIntent().getStringExtra(mCATEGORYName);
         getSupportActionBar().setTitle(mCategoryName);
         setSupportActionBar(mNoteListToolbar);
-        mCategoryId = getIntent().getLongExtra(mCATEGORYId, 0);
-        Log.d(TAG, mCATEGORYId + mCategoryId);
+        mCATEGORY_ID = getIntent().getLongExtra(mCATEGORYId, 0);
+        Log.d(TAG, mCATEGORYId + mCATEGORY_ID);
 
         mOnNoteClickListener = note -> {
             Intent intent = new Intent(this, AddNoteActivity.class);
             intent.putExtra(mNOTE_TO_ADD_ACTIVITY, note);
-            intent.putExtra(mCATEGORYId, mCategoryId);
+            intent.putExtra(mCATEGORYId, mCATEGORY_ID);
             intent.putExtra(mCATEGORYName, mCategoryName);
             intent.putExtra(mIS_FIRST_CREATED, false);
             startActivity(intent);
@@ -95,8 +95,8 @@ public class NoteListActivity extends AppCompatActivity {
                 DividerItemDecoration.VERTICAL);
         mNoteRecyclerView.addItemDecoration(dividerItemDecoration);
         mNoteViewModel = new NoteViewModel(getApplication());
-        mNoteListLiveData = mNoteViewModel.getNotesByCategoryId(mCategoryId);
-        mNoteList = mNoteViewModel.getNotesByCategoryIdList(mCategoryId);
+        mNoteListLiveData = mNoteViewModel.getNotesByCategoryId(mCATEGORY_ID);
+        mNoteList = mNoteViewModel.getNotesByCategoryIdList(mCATEGORY_ID);
         if (!mNoteList.isEmpty())
             mNoNotesTextView.setVisibility(View.GONE);
         mNoteListLiveData.observe(this, mNoteRecyclerAdapter::setNoteList);
@@ -108,7 +108,7 @@ public class NoteListActivity extends AppCompatActivity {
         mAddNoteFab = findViewById(R.id.note_list_fab);
         mAddNoteFab.setOnClickListener(v -> {
             Intent intent = new Intent(this, AddNoteActivity.class);
-            intent.putExtra(mCATEGORYId, mCategoryId);
+            intent.putExtra(mCATEGORYId, mCATEGORY_ID);
             intent.putExtra(mCATEGORYName, mCategoryName);
             intent.putExtra(mIS_FIRST_CREATED, true);
             startActivity(intent);
@@ -125,7 +125,7 @@ public class NoteListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        List<Note> noteList = mNoteViewModel.getNotesByCategoryIdList(mCategoryId);
+        List<Note> noteList = mNoteViewModel.getNotesByCategoryIdList(mCATEGORY_ID);
         if (noteList.isEmpty()) {
             mNoNotesTextView.setVisibility(View.VISIBLE);
         } else {
